@@ -1,0 +1,23 @@
+- hosts: local
+  tasks:
+    - name: Check CPU
+      shell: "top -b -n 1"
+      register: top
+
+    - name: Check IPv4
+      debug: msg="{{ ansible_lo.ipv4.address }}"
+
+    - name: Set CPU facts  
+      set_fact:
+          user_cpu: "{{top.stdout_lines[2].split()[1]}}"
+          system_cpu: "{{top.stdout_lines[2].split()[3]}}"
+    
+    - name: Output CPU facts
+      debug: msg="CPU user:{{user_cpu}} | system:{{system_cpu}}"
+
+    - name: Check RAM
+      debug: msg="RAM free:{{ ansible_memory_mb.real.free }} | used:{{ ansible_memory_mb.real.used }} | total:{{ ansible_memory_mb.real.total }}"
+             
+    - name: Check Disks
+      debug: msg="Device {{ item.device }} free:{{ (item.size_available / 1000000000) |round }}GB | total:{{ (item.size_total / 1000000000) |round }}GB"
+      with_items: "{{ ansible_mounts }}"
