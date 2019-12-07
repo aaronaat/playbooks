@@ -1,6 +1,6 @@
 Useful ansible playbooks
 
-install-package.yml **install latest package if not other version present**
+install-package.yml **install latest package if no other version present**
 
 snmp.yml **install list of packages, update configuration file, disable firewall**
 
