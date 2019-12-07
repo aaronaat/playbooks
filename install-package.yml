@@ -1,0 +1,14 @@
+- hosts: local
+  tasks:
+
+    - name: Check if package is already installed
+      yum:
+        list: net-snmp
+      # If not installed yum_list.results[*].yumstate != installed
+      register: yum_list
+
+    - name: Install latest version if not present
+      yum:
+        name: net-snmp
+        state: latest
+      when: yum_list.results | selectattr("yumstate", "match", "installed") | list | length == 0
