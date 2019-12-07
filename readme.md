@@ -1,5 +1,10 @@
 Useful ansible playbooks
 
+install-package.yml **install latest package if not other version present**
+
+snmp.yml **install list of packages, update configuration file, disable firewall**
+
+resource-check.yml **check system resources**
 ```
 :~/playbooks$ ansible-playbook resource-check.yml | grep msg > info.txt && cat info.txt
     "msg": "127.0.0.1"
