@@ -1,0 +1,27 @@
+- hosts: local
+  tasks:
+  
+    - name: install packages
+      yum:
+        name: "{{ packages }}"
+        state: latest
+      vars:
+        packages:
+        - net-snmp
+        - net-snmp-utils
+
+    - name: backup snmpd conf
+      shell: "mv /etc/snmp/snmpd.conf /etc/snmp/snmpd.conf.bak"
+
+    - name: edit snmpd.conf 
+      blockinfile:
+        path: /etc/snmp/snmpd.conf
+        marker: ""
+        create: yes
+        block: |
+
+
+    - name: stop firewall service
+      service:
+        name: firewalld
+        state: stopped
